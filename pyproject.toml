@@ -1,0 +1,17 @@
+[project]
+name = "rl-issues"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Valter Schütz", email = "valterschutz@proton.me" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "ipython>=9.4.0",
+    "torchrl>=0.8.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
