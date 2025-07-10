@@ -5,6 +5,7 @@ import torch
 from torchrl.data import (
     LazyMemmapStorage,
     LazyTensorStorage,
+    PrioritizedSampler,
     ReplayBuffer,
     TensorDictReplayBuffer,
 )
@@ -20,12 +21,17 @@ data = TensorDict(
 )
 with tempfile.TemporaryDirectory() as tempdir:
     replay_buffer = TensorDictReplayBuffer(
-        storage=LazyMemmapStorage(size, scratch_dir=tempdir),
-        # storage=LazyTensorStorage(size),
+        # storage=LazyMemmapStorage(size, scratch_dir=tempdir),
+        sampler=PrioritizedSampler(
+            max_capacity=size,
+            alpha=0.6,
+            beta=0.4,
+        ),
+        storage=LazyTensorStorage(size),
         batch_size=12,
     )
     replay_buffer.extend(data)
-    # print(f"The buffer has {len(replay_buffer)} elements")
-    # sample = replay_buffer.sample()
-    # print("sample:", sample)
-    # replay_buffer.dumps(tempdir)
+    print(f"The buffer has {len(replay_buffer)} elements")
+    sample = replay_buffer.sample()
+    print("sample:", sample)
+    replay_buffer.dumps(tempdir)
