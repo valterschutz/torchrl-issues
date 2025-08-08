@@ -6,12 +6,13 @@ readme = "README.md"
 authors = [
     { name = "Valter Schütz", email = "valterschutz@proton.me" }
 ]
-requires-python = "==3.11.9"
+requires-python = ">3.13"
 dependencies = [
-    "ipython>=9.4.0",
+    # "ipython>=9.4.0",
     # "torchrl>=0.8.1",
-    "torchrl==0.7.2",
-    "torch==2.6.0"
+    # "torchrl==0.7.2",
+    # "torch==2.6.0"
+    "torchrl>=0.9.2",
 ]
 
 [build-system]
