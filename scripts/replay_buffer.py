@@ -54,3 +54,16 @@ new_replay_buffer = TensorDictReplayBuffer(
 )
 
 td = new_replay_buffer.sample()
+
+# Also does not work
+new_replay_buffer = TensorDictReplayBuffer(
+    storage=LazyTensorStorage(max_size=10, device=device),
+    sampler=PrioritizedSampler(
+        max_capacity=len(loaded_replay_buffer), alpha=0.7, beta=0.5
+    ),
+    batch_size=2,
+    priority_key="td_error",
+)
+new_replay_buffer.set_storage(loaded_replay_buffer.storage)
+
+td = new_replay_buffer.sample()
