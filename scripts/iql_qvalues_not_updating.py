@@ -44,7 +44,9 @@ value_tdmodule = SafeModule(
     out_keys=["state_value"],
 )
 
-loss_tdmodule = DiscreteIQLLoss(actor_tdmodule_prob, qvalue_tdmodule, value_tdmodule)
+loss_tdmodule = DiscreteIQLLoss(
+    actor_tdmodule_prob, qvalue_tdmodule, value_tdmodule, num_qvalue_nets=1
+)
 
 action = torch.tensor([[1, 0, 0, 0], [0, 1, 0, 0]], dtype=torch.int64)
 data = TensorDict(
