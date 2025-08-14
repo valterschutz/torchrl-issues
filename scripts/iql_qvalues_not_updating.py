@@ -30,6 +30,7 @@ class QValueClass(nn.Module):
 
 
 qvalue_module = QValueClass()
+initial_weights = qvalue_module.net.weight.clone()
 qvalue_tdmodule = SafeModule(
     QValueClass(),
     in_keys=["observation", "action"],
@@ -68,3 +69,11 @@ loss.backward()
 print(actor_module.weight.grad is not None)  # True
 print(value_module.weight.grad is not None)  # True
 print(qvalue_module.net.weight.grad is not None)  # False?
+
+weights_after_backward = qvalue_module.net.weight.clone()
+
+print((initial_weights - weights_after_backward).abs().sum())
+
+with loss_tdmodule.qvalue_network_params.to_module(qvalue_module):
+    copied_weights = qvalue_module.net.weight.clone()
+    print((initial_weights - copied_weights).abs().sum())
